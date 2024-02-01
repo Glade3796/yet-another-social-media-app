@@ -1,5 +1,7 @@
 import { db } from "@/app/_lib/db";
+import NewPost from "@/app/components/NewPost";
 import { auth } from "@clerk/nextjs";
+import { revalidatePath } from "next/cache";
 import Link from "next/link";
 
 export default async function Dashboard({ searchParams }) {
@@ -10,7 +12,7 @@ export default async function Dashboard({ searchParams }) {
   );
   const currUser = currUserData.rows[0];
 
-  console.log(currUserData);
+
   const posts = await db.query(
     `SELECT *, profiles.username AS username FROM posts JOIN profiles ON posts.user_id = profiles.id ORDER BY posts.id DESC`
   );
@@ -19,18 +21,21 @@ export default async function Dashboard({ searchParams }) {
     `SELECT *, profiles.username AS username FROM likes JOIN profiles ON likes.user_id = profiles.id ORDER BY likes.id DESC`
   );
   if (searchParams.sort === "new") {
-    posts.reverse;
+    posts.rows.sort((a, b) => a.id - b.id);
+    // revalidatePath("/dashboard?sort=new");
+    console.log("newest first");
+    // TODO Fix sort function
   }
-  console.log(likes);
 
+  const profId = currUser.id;
   return (
     <div>
-      <div>new post form</div>
+      <NewPost profId={profId} />
       <div>
-        <nav>
+        {/* <nav>
           <Link href="/dashboard?sort=new">newest first</Link>
           <Link href="/dashboard">default</Link>
-        </nav>
+        </nav> */}
         <div>
           {posts.rows.map((post) => (
             <div key={post.id}>
@@ -46,7 +51,7 @@ export default async function Dashboard({ searchParams }) {
                 0 ? (
                   <p>liked this</p>
                 ) : null}
-                {/* TODO finish like functionality (like button) */}
+                {/* TODO LIKE button finish like functionality (like button) */}
               </div>
             </div>
           ))}

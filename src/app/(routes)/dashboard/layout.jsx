@@ -2,6 +2,7 @@ import { ClerkProvider, UserButton, auth } from "@clerk/nextjs";
 
 import { db } from "@/app/_lib/db";
 import CreateProfile from "@/app/components/CreateProfile";
+import Link from "next/link";
 
 export default async function DashboardLayout({ children }) {
   const { userId } = auth();
@@ -14,6 +15,11 @@ export default async function DashboardLayout({ children }) {
     <main>
       <header>
         <h1>{profileResult.rows[0].username}</h1>
+        <nav>
+          <Link href={`/dashboard/user/${profileResult.rows[0].id}`}>
+            {profileResult.rows[0].username} profile
+          </Link>
+        </nav>
       </header>
       {/* has account */}
       {profileResult.rowCount !== 0 && children}
