@@ -9,11 +9,14 @@ export default function CreateProfile() {
   async function addProfile(formData) {
     "use server";
     const username = formData.get("username");
-    const bio = formData.get("bio");
+    const biography = formData.get("biography");
 
-    await db.query(`INSERT INTO profiles (clerk_user_id, username, bio) VALUES (${userId}, ${username}, ${bio})`)
+    await db.query(
+      `INSERT INTO profiles (clerk_user_id, username, biography) VALUES ($1, $2, $3)`,
+      [userId, username, biography]
+    );
     revalidatePath("/");
-    redirect("/");
+    redirect("/dashboard");
   }
 
   return (
@@ -21,7 +24,7 @@ export default function CreateProfile() {
       <h2>Create Profile</h2>
       <form action={addProfile}>
         <input name="username" placeholder="Username" />
-        <textarea name="bio" placeholder="Bio"></textarea>
+        <textarea name="biography" placeholder="Bio"></textarea>
         <button>Submit</button>
       </form>
     </div>
