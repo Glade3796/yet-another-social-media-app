@@ -16,8 +16,6 @@ export default function PostsWithLikesSection({
   // );
   const userLikes = likes.filter((x) => x.user_id === profId);
 
-  console.log(userLikes);
-
   return (
     <div className="post-container">
       {posts?.map((post) => (
