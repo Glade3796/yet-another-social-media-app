@@ -1,11 +1,14 @@
 import { db } from "./_lib/db";
+import PopOver from "./components/Popover";
 
 export default async function Home() {
   const users = await db.query("SELECT * FROM profiles");
 
   return (
     <main>
-      <h1>{users.rows[0].username}</h1>
+      <div>
+      <h1>{users.rows[0]?.username}</h1>
+      <p>Welcome to Yet Another Social Media App...</p></div>
     </main>
   );
 }

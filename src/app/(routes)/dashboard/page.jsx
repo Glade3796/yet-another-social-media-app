@@ -43,7 +43,7 @@ export default async function Dashboard({ searchParams }) {
     revalidatePath("/dashboard");
   }
   return (
-    <div>
+    <div className="feed-container">
       <NewPost profId={profId} />
       <div>
         {/* <nav>

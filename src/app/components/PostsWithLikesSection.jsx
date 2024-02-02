@@ -19,19 +19,21 @@ export default function PostsWithLikesSection({
   console.log(userLikes);
 
   return (
-    <div>
+    <div className="post-container">
       {posts?.map((post) => (
-        <div key={post.id}>
+        <div key={post.id} className="post-box">
           <h3>{post.username}</h3>
           <p>{post.content}</p>
-          <div>
+          <div className="like-box">
             {likes
               .filter((like) => like.post_id === post.id)
               ?.map((like) => (
                 <p key={like.id}> {like.username}</p>
               ))}
             {likes.filter((like) => like.post_id === post.id).length > 0 ? (
-              <p>liked this</p>
+              <p>
+                <b>liked this!</b>
+              </p>
             ) : null}
 
             {profId !== post.user_id &&

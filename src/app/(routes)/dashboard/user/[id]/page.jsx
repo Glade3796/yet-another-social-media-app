@@ -43,7 +43,7 @@ export default async function UserPage({ params }) {
     redirect(`/dashboard/user/${profile.id}`);
   }
   return (
-    <div>
+    <div className="user-container">
       <ViewProfile profile={profile} submitEdit={submitEdit}></ViewProfile>
       <NewPost profId={profile.id}></NewPost>
       <UserFeed posts={posts} handleDelPost={handleDelPost}></UserFeed>

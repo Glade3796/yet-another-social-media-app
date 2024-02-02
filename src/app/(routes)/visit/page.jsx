@@ -5,7 +5,7 @@ export default async function VisitProfilePage() {
   const profilesRes = await db.query("SELECT * FROM profiles");
   const profiles = profilesRes.rows;
   return (
-    <div>
+    <div className="visit-box">
       <h1>Visit Profiles:</h1>
       <ul>
         {profiles.map((profile) => (

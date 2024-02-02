@@ -15,14 +15,16 @@ export default async function VisitProfilePage({ params }) {
   const posts = postsRes.rows;
   return (
     <main>
-      <div>
-        <h3>Username: {profile.username}</h3>
-        <p>Bio: {profile.biography}</p>
+      <div className="user-box">
+        <h3 className="user-name">{profile.username}</h3>
+        <p className="bio-box">{profile.biography}</p>
       </div>
-      <div>
+      <div className="feed-container">
         <h3>{profile.username}&apos;s posts:</h3>
         {posts.map((post) => (
-          <p key={post.id}>{post.content}</p>
+          <p key={post.id} className="post-box">
+            {post.content}
+          </p>
         ))}
       </div>
     </main>
