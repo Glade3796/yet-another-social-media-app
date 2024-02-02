@@ -1,7 +1,9 @@
 import { db } from "@/app/_lib/db";
 import CreateProfile from "@/app/components/CreateProfile";
-
+import { auth } from "@clerk/nextjs";
+import { notFound } from "next/navigation";
 export default async function VisitProfilePage({ params }) {
+  const { userId } = auth();
   const profRes = await db.query("SELECT * FROM profiles WHERE id = $1", [
     params.id,
   ]);
