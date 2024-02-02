@@ -1,9 +1,10 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ClerkProvider, UserButton, auth } from "@clerk/nextjs";
+import { ClerkProvider, SignOutButton, UserButton, auth } from "@clerk/nextjs";
 import { shadesOfPurple } from "@clerk/themes";
 import { db } from "./_lib/db";
 import CreateProfile from "./components/CreateProfile";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,8 +28,11 @@ export default async function RootLayout({ children }) {
       <html lang="en">
         <body className={inter.className}>
           <header>
-            <h1>{metadata.title}</h1>
+            <Link href="/dashboard">
+              <h1>YASMA</h1>
+            </Link>
             <UserButton afterSignOutUrl="/" />
+            
           </header>
           {children}
         </body>

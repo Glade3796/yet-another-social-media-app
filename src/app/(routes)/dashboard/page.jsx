@@ -12,7 +12,6 @@ export default async function Dashboard({ searchParams }) {
   );
   const currUser = currUserData.rows[0];
 
-
   const posts = await db.query(
     `SELECT *, profiles.username AS username FROM posts JOIN profiles ON posts.user_id = profiles.id ORDER BY posts.id DESC`
   );

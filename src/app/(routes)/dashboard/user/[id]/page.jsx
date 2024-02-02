@@ -3,12 +3,17 @@ import NewPost from "@/app/components/NewPost";
 import UserFeed from "@/app/components/UserFeed";
 import ViewProfile from "@/app/components/ViewProfile";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 export default async function UserPage({ params }) {
   const profileRes = await db.query("SELECT * FROM profiles WHERE id = $1", [
     params.id,
   ]);
+  const profPage = profileRes?.rows[0];
+  if (!profPage) {
+    notFound();
+  }
+
   const postsRes = await db.query("SELECT * FROM posts WHERE user_id = $1", [
     params.id,
   ]);
