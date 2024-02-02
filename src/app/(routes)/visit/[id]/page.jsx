@@ -20,7 +20,7 @@ export default async function VisitProfilePage({ params }) {
         <p>Bio: {profile.biography}</p>
       </div>
       <div>
-        <h3>{profile.username}' s posts:</h3>
+        <h3>{profile.username}&apos;s posts:</h3>
         {posts.map((post) => (
           <p key={post.id}>{post.content}</p>
         ))}
