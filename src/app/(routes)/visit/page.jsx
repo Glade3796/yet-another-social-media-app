@@ -1,17 +1,17 @@
 import { db } from "@/app/_lib/db";
 import Link from "next/link";
 
-export default async function VisitProfilePage() {
-  const profileRes = await db.query("SELECT * FROM profiles WHERE id = $1", [
-    params.id,
-  ]);
-  const profPage = profileRes?.rows[0];
-  if (!profPage) {
-    notFound();
-  }
+export default async function VisitProfilePage({ params }) {
+  // const profileRes = await db.query("SELECT * FROM profiles WHERE id = $1", [
+  //   params.id,
+  // ]);
+  // const profPage = profileRes?.rows[0];
+  // if (!profPage) {
+  //   notFound();
+  // }
   const profilesRes = await db.query("SELECT * FROM profiles");
   const profiles = profilesRes.rows;
-  
+
   return (
     <div className="visit-box">
       <h1>Visit Profiles:</h1>
