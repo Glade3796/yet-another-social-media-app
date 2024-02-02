@@ -45,7 +45,10 @@ export default async function RootLayout({ children }) {
 
             <UserButton afterSignOutUrl="/" />
           </header>
-          <Suspense fallback={<h3>...loading :)</h3>}>{children}</Suspense>
+          {/* <Suspense fallback={<h3>...loading :)</h3>}>
+           */}
+          {children}
+          {/* </Suspense> */}
         </body>
       </html>
     </ClerkProvider>

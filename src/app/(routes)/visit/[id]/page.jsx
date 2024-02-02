@@ -1,4 +1,5 @@
 import { db } from "@/app/_lib/db";
+import CreateProfile from "@/app/components/CreateProfile";
 
 export default async function VisitProfilePage({ params }) {
   const profRes = await db.query("SELECT * FROM profiles WHERE id = $1", [
@@ -13,20 +14,29 @@ export default async function VisitProfilePage({ params }) {
     params.id,
   ]);
   const posts = postsRes.rows;
+  const profileResult = await db.query(
+    `SELECT * FROM profiles WHERE clerk_user_id = $1`,
+    [userId]
+  );
   return (
-    <main>
-      <div className="user-box">
-        <h3 className="user-name">{profile.username}</h3>
-        <p className="bio-box">{profile.biography}</p>
-      </div>
-      <div className="feed-container">
-        <h3>{profile.username}&apos;s posts:</h3>
-        {posts.map((post) => (
-          <p key={post.id} className="post-box">
-            {post.content}
-          </p>
-        ))}
-      </div>
-    </main>
+    <>
+      {profileResult.rowCount === 0 && <CreateProfile />}
+      {profileResult.rowCount !== 0 && (
+        <main>
+          <div className="user-box">
+            <h3 className="user-name">{profile.username}</h3>
+            <p className="bio-box">{profile.biography}</p>
+          </div>
+          <div className="feed-container">
+            <h3>{profile.username}&apos;s posts:</h3>
+            {posts.map((post) => (
+              <p key={post.id} className="post-box">
+                {post.content}
+              </p>
+            ))}
+          </div>
+        </main>
+      )}
+    </>
   );
 }

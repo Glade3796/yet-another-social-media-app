@@ -49,14 +49,14 @@ export default async function Dashboard({ searchParams }) {
           <Link href="/dashboard?sort=new">newest first</Link>
           <Link href="/dashboard">default</Link>
         </nav> */}
-        <Suspense fallback={<p>Loading feed...</p>}>
-          <PostsWithLikesSection
-            likes={serverLikes}
-            posts={serverPosts}
-            profId={profId}
-            handleLike={handleLike}
-          />
-        </Suspense>
+        {/* <Suspense fallback={<p>Loading feed...</p>}> */}
+        <PostsWithLikesSection
+          likes={serverLikes}
+          posts={serverPosts}
+          profId={profId}
+          handleLike={handleLike}
+        />
+        {/* </Suspense> */}
       </div>
     </div>
   );

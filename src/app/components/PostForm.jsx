@@ -8,7 +8,8 @@ export default function PostForm({ addPost }) {
   const [content, setContent] = useState("");
   const [showThanks, setShowThanks] = useState(false);
   const status = useFormStatus();
-  function handleSubmit() {
+  function handleSubmit(e) {
+    // e.preventDefault();
     setContent("");
     setShowThanks(true);
     setTimeout(() => {
@@ -30,7 +31,7 @@ export default function PostForm({ addPost }) {
           {showThanks && <p>Thanks for posting xoxo</p>}
         
       </form> */}
-      <Form.Root className="FormRoot">
+      <Form.Root className="FormRoot" action={addPost} onSubmit={handleSubmit}>
         <Form.Field className="FormField" name="content">
           <div
             style={{
@@ -45,11 +46,17 @@ export default function PostForm({ addPost }) {
             </Form.Message>
           </div>
           <Form.Control asChild>
-            <textarea className="Textarea" required />
+            <textarea
+              className="Textarea"
+              required
+              placeholder="Content"
+              onChange={(e) => setContent(e.target.value)}
+              value={content}
+            />
           </Form.Control>
         </Form.Field>
         <Form.Submit asChild>
-          <SubmitBtn  />
+          <SubmitBtn />
         </Form.Submit>
       </Form.Root>
       ;

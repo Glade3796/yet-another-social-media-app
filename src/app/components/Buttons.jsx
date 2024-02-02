@@ -40,3 +40,15 @@ export function UpdateBtn() {
     </button>
   );
 }
+export function CreateBtn() {
+  const status = useFormStatus();
+  return (
+    <button
+      disabled={status.pending}
+      className="Button SubmitBtn"
+      style={{ marginTop: 10 }}
+    >
+      {!status.pending ? "Create profile" : "creating..."}
+    </button>
+  );
+}
