@@ -5,6 +5,7 @@ import { auth } from "@clerk/nextjs";
 import { revalidatePath } from "next/cache";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 
 export default async function Dashboard({ searchParams }) {
   const { userId } = auth();
@@ -49,12 +50,14 @@ export default async function Dashboard({ searchParams }) {
           <Link href="/dashboard?sort=new">newest first</Link>
           <Link href="/dashboard">default</Link>
         </nav> */}
-        <PostsWithLikesSection
-          likes={serverLikes}
-          posts={serverPosts}
-          profId={profId}
-          handleLike={handleLike}
-        />
+        <Suspense fallback={<p>Loading feed...</p>}>
+          <PostsWithLikesSection
+            likes={serverLikes}
+            posts={serverPosts}
+            profId={profId}
+            handleLike={handleLike}
+          />
+        </Suspense>
       </div>
     </div>
   );

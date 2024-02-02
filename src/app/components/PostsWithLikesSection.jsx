@@ -1,6 +1,8 @@
 "use client";
 import { useState } from "react";
 import { useFormStatus } from "react-dom";
+import { LikeBtn } from "./Buttons";
+
 export default function PostsWithLikesSection({
   posts,
   likes,
@@ -51,9 +53,7 @@ export default function PostsWithLikesSection({
                     readOnly
                     hidden
                   ></input>
-                  <button type="submit" hidden={formStatus.pending}>
-                    Like
-                  </button>
+                  <LikeBtn />
                 </form>
               )}
             {/* TODO LIKE button finish like functionality (like button) */}

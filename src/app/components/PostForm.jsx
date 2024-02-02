@@ -1,9 +1,13 @@
 "use client";
 import { useState } from "react";
+import { useFormStatus } from "react-dom";
+import { SubmitBtn } from "./Buttons";
+
 
 export default function PostForm({ addPost }) {
   const [content, setContent] = useState("");
   const [showThanks, setShowThanks] = useState(false);
+  const status = useFormStatus();
   function handleSubmit() {
     setContent("");
     setShowThanks(true);
@@ -21,7 +25,7 @@ export default function PostForm({ addPost }) {
           onChange={(e) => setContent(e.target.value)}
           value={content}
         ></textarea>
-        <button>Submit</button>
+        <SubmitBtn />
         {showThanks && <p>Thanks for posting xoxo</p>}
       </form>
     </div>

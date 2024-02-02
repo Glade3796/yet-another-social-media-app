@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { SubmitBtn, UpdateBtn } from "./Buttons";
 
 export default function ViewProfile({ profile, submitEdit }) {
   const [editProf, setEditProf] = useState(false);
@@ -28,7 +29,7 @@ export default function ViewProfile({ profile, submitEdit }) {
               value={biography}
               onChange={(e) => setBiography(e.target.value)}
             ></textarea>
-            <button>Submit</button>
+            <UpdateBtn />
           </form>
 
           <button onClick={() => setEditProf(!editProf)}>cancel</button>

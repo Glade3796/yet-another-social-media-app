@@ -3,6 +3,8 @@ import { ClerkProvider, SignOutButton, UserButton, auth } from "@clerk/nextjs";
 import { db } from "@/app/_lib/db";
 import CreateProfile from "@/app/components/CreateProfile";
 import Link from "next/link";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 export default async function DashboardLayout({ children }) {
   const { userId } = auth();
@@ -12,7 +14,7 @@ export default async function DashboardLayout({ children }) {
   );
 
   return (
-    <main>
+    <main> <Suspense fallback={<Loading/>}>
       <header>
         <h1>
           <Link href={`/dashboard`}>{profileResult?.rows[0]?.username}</Link>
@@ -29,6 +31,6 @@ export default async function DashboardLayout({ children }) {
       {profileResult.rowCount !== 0 && children}
       {/* no account */}
       {profileResult.rowCount === 0 && <CreateProfile />}
-    </main>
+      </Suspense></main>
   );
 }

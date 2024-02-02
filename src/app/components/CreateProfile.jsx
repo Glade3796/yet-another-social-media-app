@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { db } from "../_lib/db";
+import { UpdateBtn } from "./Buttons";
 
 export default function CreateProfile() {
   const { userId } = auth();
@@ -25,7 +26,7 @@ export default function CreateProfile() {
       <form action={addProfile}>
         <input name="username" placeholder="Username" />
         <textarea name="biography" placeholder="Bio"></textarea>
-        <button>Submit</button>
+        <UpdateBtn />
       </form>
     </div>
   );
