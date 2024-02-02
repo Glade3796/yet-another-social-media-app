@@ -1,6 +1,8 @@
 import { revalidatePath } from "next/cache";
 import { db } from "../_lib/db";
 import { redirect } from "next/navigation";
+
+import {useForm}
 import PostForm from "./PostForm";
 export default function NewPost({ profId }) {
   async function addPost(formData) {

@@ -15,14 +15,12 @@ export default async function DashboardLayout({ children }) {
     <main>
       <header>
         <h1>
-          <Link href={`/dashboard/user/${profileResult.rows[0].id}`}>
-            {profileResult.rows[0].username}
-          </Link>
+          <Link href={`/dashboard`}>{profileResult?.rows[0]?.username}</Link>
         </h1>
         <nav>
           <Link href="/dashboard">dashboard</Link>
-          <Link href={`/dashboard/user/${profileResult.rows[0].id}`}>
-            {profileResult.rows[0].username} profile
+          <Link href={`/dashboard/user/${profileResult?.rows[0]?.id}`}>
+            {profileResult?.rows[0]?.username} profile
           </Link>
         </nav>
         <SignOutButton />

@@ -1,8 +1,10 @@
 import { db } from "@/app/_lib/db";
 import NewPost from "@/app/components/NewPost";
+import PostsWithLikesSection from "@/app/components/PostsWithLikesSection";
 import { auth } from "@clerk/nextjs";
 import { revalidatePath } from "next/cache";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default async function Dashboard({ searchParams }) {
   const { userId } = auth();
@@ -13,11 +15,11 @@ export default async function Dashboard({ searchParams }) {
   const currUser = currUserData.rows[0];
 
   const posts = await db.query(
-    `SELECT *, profiles.username AS username FROM posts JOIN profiles ON posts.user_id = profiles.id ORDER BY posts.id DESC`
+    `SELECT posts.id, posts.content, posts.user_id, profiles.username AS username FROM posts JOIN profiles ON posts.user_id = profiles.id ORDER BY posts.id DESC`
   );
 
   const likes = await db.query(
-    `SELECT *, profiles.username AS username FROM likes JOIN profiles ON likes.user_id = profiles.id ORDER BY likes.id DESC`
+    `SELECT *, profiles.username AS username FROM likes JOIN profiles ON likes.user_id = profiles.id ORDER BY likes.id`
   );
   if (searchParams.sort === "new") {
     posts.rows.sort((a, b) => a.id - b.id);
@@ -25,8 +27,20 @@ export default async function Dashboard({ searchParams }) {
     console.log("newest first");
     // TODO Fix sort function
   }
-
+  const serverLikes = likes.rows;
+  const serverPosts = posts.rows;
   const profId = currUser.id;
+
+  async function handleLike(formData) {
+    "use server";
+    const post_id = formData.get("post_id");
+    const user_id = formData.get("user_id");
+    await db.query(`INSERT INTO likes (post_id, user_id) VALUES ($1, $2)`, [
+      post_id,
+      user_id,
+    ]);
+    revalidatePath("/dashboard");
+  }
   return (
     <div>
       <NewPost profId={profId} />
@@ -35,26 +49,12 @@ export default async function Dashboard({ searchParams }) {
           <Link href="/dashboard?sort=new">newest first</Link>
           <Link href="/dashboard">default</Link>
         </nav> */}
-        <div>
-          {posts.rows.map((post) => (
-            <div key={post.id}>
-              <h3>{post.username}</h3>
-              <p>{post.content}</p>
-              <div>
-                {likes.rows
-                  .filter((like) => like.post_id === post.id)
-                  .map((like) => (
-                    <p key={like.id}> {like.username}</p>
-                  ))}
-                {likes.rows.filter((like) => like.post_id === post.id).length >
-                0 ? (
-                  <p>liked this</p>
-                ) : null}
-                {/* TODO LIKE button finish like functionality (like button) */}
-              </div>
-            </div>
-          ))}
-        </div>
+        <PostsWithLikesSection
+          likes={serverLikes}
+          posts={serverPosts}
+          profId={profId}
+          handleLike={handleLike}
+        />
       </div>
     </div>
   );

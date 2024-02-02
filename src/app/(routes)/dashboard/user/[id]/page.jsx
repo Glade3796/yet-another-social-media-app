@@ -2,6 +2,7 @@ import { db } from "@/app/_lib/db";
 import NewPost from "@/app/components/NewPost";
 import UserFeed from "@/app/components/UserFeed";
 import ViewProfile from "@/app/components/ViewProfile";
+import { auth } from "@clerk/nextjs";
 import { revalidatePath } from "next/cache";
 import { notFound, redirect } from "next/navigation";
 
@@ -13,7 +14,10 @@ export default async function UserPage({ params }) {
   if (!profPage) {
     notFound();
   }
-
+  const { userId } = auth();
+  if (profPage.clerk_user_id !== userId) {
+    redirect(`/visit/${params.id}`);
+  }
   const postsRes = await db.query("SELECT * FROM posts WHERE user_id = $1", [
     params.id,
   ]);
