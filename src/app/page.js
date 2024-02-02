@@ -1,5 +1,5 @@
 import { db } from "./_lib/db";
-import PopOver from "./components/Popover";
+
 
 export default async function Home() {
   const users = await db.query("SELECT * FROM profiles");

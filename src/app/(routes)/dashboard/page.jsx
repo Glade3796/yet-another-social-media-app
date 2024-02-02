@@ -3,8 +3,7 @@ import NewPost from "@/app/components/NewPost";
 import PostsWithLikesSection from "@/app/components/PostsWithLikesSection";
 import { auth } from "@clerk/nextjs";
 import { revalidatePath } from "next/cache";
-import Link from "next/link";
-import { redirect } from "next/navigation";
+
 import { Suspense } from "react";
 
 export default async function Dashboard({ searchParams }) {
@@ -25,7 +24,7 @@ export default async function Dashboard({ searchParams }) {
   if (searchParams.sort === "new") {
     posts.rows.sort((a, b) => a.id - b.id);
     // revalidatePath("/dashboard?sort=new");
-    console.log("newest first");
+
     // TODO Fix sort function
   }
   const serverLikes = likes.rows;

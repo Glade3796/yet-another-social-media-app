@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { SubmitBtn, UpdateBtn } from "./Buttons";
+import {  UpdateBtn } from "./Buttons";
 
 export default function ViewProfile({ profile, submitEdit }) {
   const [editProf, setEditProf] = useState(false);

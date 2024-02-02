@@ -2,7 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import {
   ClerkProvider,
-  SignOutButton,
+
   UserButton,
   auth,
   currentUser,
@@ -26,7 +26,7 @@ export default async function RootLayout({ children }) {
     [userId]
   );
   const currUser = currUserData.rows[0];
-  console.log(currentUser);
+
   return (
     <ClerkProvider
       appearance={{
